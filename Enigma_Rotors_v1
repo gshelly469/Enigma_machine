@@ -1,0 +1,248 @@
+#include <iostream> 
+#include <unordered_map>
+using namespace std; 
+
+int first_rotor_counter=0;
+int second_rotor_counter=0;
+
+int first_rotor( int ch , int count, int initial )
+{
+    first_rotor_counter++;
+    
+    int res = ch + initial;
+    
+    if ( first_rotor_counter > 26 )                     //To reset first counter
+    {
+        first_rotor_counter = first_rotor_counter%26;
+        second_rotor_counter++;
+    }
+    
+    if ( res <= 0 )                                     //Adjustment for negative
+    {
+        res = 26+res;
+    }
+    
+    unordered_map<int,int> hash;
+    hash[1]=5;
+    hash[2]=9;
+    hash[3]=4;
+    hash[4]=20;
+    hash[5]=11;
+    hash[6]=10;
+    hash[7]=3;
+    hash[8]=13;
+    hash[9]=12;
+    hash[10]=25;
+    hash[11]=26;
+    hash[12]=2;
+    hash[13]=23;
+    hash[14]=24;
+    hash[15]=21;
+    hash[16]=17;
+    hash[17]=15;
+    hash[18]=1;
+    hash[19]=7;
+    hash[20]=14;
+    hash[21]=18;
+    hash[22]=19;
+    hash[23]=6;
+    hash[24]=22;
+    hash[25]=16;
+    hash[26]=8;
+    int in1 = hash[res];
+    cout<<initial<<endl;
+    cout<<"one "<<in1<<" value sent "<<in1 + initial<<endl;
+    return (in1);
+}
+
+int second_rotor( int integer, int count, int initial )
+{
+    int res = integer - initial + count;
+    if ( count > 26 )
+    {
+        count = count%26;
+    }
+    if ( res <= 0 )
+    {
+        res = 26+res;
+    }
+    unordered_map<int,int> hash;
+    hash[1]=4;
+    hash[2]=6;
+    hash[3]=13;
+    hash[4]=20;
+    hash[5]=8;
+    hash[6]=1;
+    hash[7]=10;
+    hash[8]=17;
+    hash[9]=21;
+    hash[10]=12;
+    hash[11]=16;
+    hash[12]=25;
+    hash[13]=22;
+    hash[14]=11;
+    hash[15]=2;
+    hash[16]=5;
+    hash[17]=9;
+    hash[18]=15;
+    hash[19]=24;
+    hash[20]=18;
+    hash[21]=7;
+    hash[22]=3;
+    hash[23]=14;
+    hash[24]=23;
+    hash[25]=26;
+    hash[26]=19;
+    cout<<"two "<<hash[res]<<endl;
+    return hash[res];
+}
+
+
+int reflector( int ch1 )
+{
+    unordered_map<int,int> hash;
+    hash[1]=8;
+    hash[2]=19;
+    hash[3]=14;
+    hash[4]=24;
+    hash[5]=18;
+    hash[6]=11;
+    hash[7]=9;
+    hash[8]=1;
+    hash[9]=7;
+    hash[10]=20;
+    hash[11]=6;
+    hash[12]=26;
+    hash[13]=22;
+    hash[14]=3;
+    hash[15]=23;
+    hash[16]=25;
+    hash[17]=21;
+    hash[18]=5;
+    hash[19]=2;
+    hash[20]=10;
+    hash[21]=17;
+    hash[22]=13;
+    hash[23]=15;
+    hash[24]=4;
+    hash[25]=16;
+    hash[26]=12;
+    cout<<"three "<<hash[ch1]<<endl;
+    return hash[ch1];
+}  
+
+
+int second_rotor( int integer )
+{
+    unordered_map<int,int> hash;
+    hash[1]=4;
+    hash[2]=6;
+    hash[3]=13;
+    hash[4]=20;
+    hash[5]=8;
+    hash[6]=1;
+    hash[7]=10;
+    hash[8]=17;
+    hash[9]=21;
+    hash[10]=12;
+    hash[11]=16;
+    hash[12]=25;
+    hash[13]=22;
+    hash[14]=11;
+    hash[15]=2;
+    hash[16]=5;
+    hash[17]=9;
+    hash[18]=15;
+    hash[19]=24;
+    hash[20]=18;
+    hash[21]=7;
+    hash[22]=3;
+    hash[23]=14;
+    hash[24]=23;
+    hash[25]=26;
+    hash[26]=19;
+    for( auto it = hash.begin() ; it != hash.end() ; it++)
+    {
+        if (  it->second == integer )
+        {
+            cout<<"four "<<it->first<<endl;
+            return it->first;
+        }
+    }
+}
+
+
+int first_rotor(int ch , int initial )
+{
+    unordered_map<int,int> hash;
+    hash[1]=5;
+    hash[2]=9;
+    hash[3]=4;
+    hash[4]=20;
+    hash[5]=11;
+    hash[6]=10;
+    hash[7]=3;
+    hash[8]=13;
+    hash[9]=12;
+    hash[10]=25;
+    hash[11]=26;
+    hash[12]=2;
+    hash[13]=23;
+    hash[14]=24;
+    hash[15]=21;
+    hash[16]=17;
+    hash[17]=15;
+    hash[18]=1;
+    hash[19]=7;
+    hash[20]=14;
+    hash[21]=18;
+    hash[22]=19;
+    hash[23]=6;
+    hash[24]=22;
+    hash[25]=16;
+    hash[26]=8;
+    if ( ch > 26 )
+    {
+        ch = ch%26;
+    }
+    for( auto it = hash.begin() ; it != hash.end() ; it++)
+    {
+        if (  it->second == ch)
+        {
+            cout<<"fifth "<<it->first - initial<<endl;
+            return it->first - initial;
+        }
+    }
+}
+
+
+char calling_rotors(char character,int v1,int v2)
+{
+    cout<<"converted"<<int(character)-96<<endl;
+    int first = first_rotor(int(character)-96, 0 , v1);
+ //   int second = second_rotor ( first , 0 , v2);
+    int third = reflector ( first );
+ //   int fourth = second_rotor ( third );
+    int fifth = first_rotor( third , v1);
+    /*
+    if ( ( fifth + v1 ) > 26 )
+    {
+        fifth = (fifth + v1)%26;
+    }
+    */
+    cout<<char( fifth + 96);
+}
+// driver code 
+int main() 
+{ 
+    
+    int num = 122;
+    char b = ' ';
+    cout<<num<<" "<<(char)num<<" "<<char(num);
+    cout<<b<<" "<<(int)b<<" "<<int(b)<<endl;
+    char op = 'w';
+    int initial_pos1 = 2;
+    int initial_pos2 = 3;
+    calling_rotors( op , initial_pos1 , initial_pos2 );
+    return 0;
+}
